@@ -1,5 +1,5 @@
 {
-  "name": "create-word-pages",
+  "name": "@codemeall/create-word-pages",
   "version": "0.1.0",
   "description": "Scaffold a Word Pages Obsidian-to-GitHub-Pages starter.",
   "type": "module",
