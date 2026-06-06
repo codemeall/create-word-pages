@@ -1,0 +1,21 @@
+{
+  "name": "create-word-pages",
+  "version": "0.1.0",
+  "description": "Scaffold a Word Pages Obsidian-to-GitHub-Pages starter.",
+  "type": "module",
+  "bin": {
+    "create-word-pages": "./bin/create-word-pages.js"
+  },
+  "files": [
+    "bin",
+    "template"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22",
+    "npm": ">=10.9"
+  },
+  "license": "MIT"
+}
