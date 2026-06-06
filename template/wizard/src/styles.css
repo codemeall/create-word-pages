@@ -59,6 +59,48 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.status-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 24px 0 0;
+  border: 1px solid #d8d0c0;
+  border-left: 5px solid #8a8376;
+  border-radius: 8px;
+  padding: 16px;
+  background: #fffdf8;
+}
+
+.status-panel p {
+  margin: 4px 0 0;
+  color: #5f594f;
+}
+
+.status-panel.saved {
+  border-left-color: #28786f;
+}
+
+.status-panel.dirty,
+.status-panel.saving {
+  border-left-color: #8d5c2c;
+}
+
+.status-panel.failed {
+  border-left-color: #b83232;
+}
+
+.status-panel > span {
+  white-space: nowrap;
+  color: #6f675c;
+  font-size: 0.92rem;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -105,6 +147,44 @@ textarea {
   margin-top: 0;
 }
 
+.next-steps {
+  margin-top: 24px;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.steps-grid > div {
+  border: 1px solid #ded8ca;
+  border-radius: 8px;
+  padding: 18px;
+  background: #fffdf8;
+}
+
+.steps-grid span {
+  display: inline-grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 50%;
+  color: white;
+  background: #28786f;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.steps-grid h3 {
+  margin: 14px 0 8px;
+}
+
+.steps-grid p {
+  margin: 0;
+  color: #5f594f;
+}
+
 code {
   border-radius: 4px;
   padding: 2px 5px;
@@ -121,12 +201,18 @@ footer {
 
 @media (max-width: 720px) {
   .hero,
-  footer {
+  footer,
+  .status-panel {
     align-items: stretch;
     flex-direction: column;
   }
 
-  .grid {
+  .grid,
+  .steps-grid {
     grid-template-columns: 1fr;
+  }
+
+  .status-panel > span {
+    white-space: normal;
   }
 }

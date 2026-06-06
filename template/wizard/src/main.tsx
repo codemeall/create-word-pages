@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useState } from "react"
 import { createRoot } from "react-dom/client"
 import "./styles.css"
 
+type SaveState = "idle" | "dirty" | "saving" | "saved" | "failed"
+
 type WordPagesConfig = {
   site: {
     title: string
@@ -34,15 +36,26 @@ function displayPagesUrl(baseUrl: string) {
 function App() {
   const [config, setConfig] = useState<WordPagesConfig | null>(null)
   const [status, setStatus] = useState("Loading")
+  const [saveState, setSaveState] = useState<SaveState>("idle")
+  const [message, setMessage] = useState("Load the wizard, edit settings, then save.")
+  const [lastSavedAt, setLastSavedAt] = useState("")
 
   useEffect(() => {
     fetch("/api/config")
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) throw new Error("Could not load word-pages.config.json")
+        return response.json()
+      })
       .then((data) => {
         setConfig(data)
         setStatus("Ready")
+        setMessage("Configuration loaded from word-pages.config.json.")
       })
-      .catch(() => setStatus("Could not load configuration"))
+      .catch((error) => {
+        setStatus("Could not load configuration")
+        setSaveState("failed")
+        setMessage(error instanceof Error ? error.message : "Restart npm run wizard from the site root.")
+      })
   }, [])
 
   const pageUrl = useMemo(() => {
@@ -51,7 +64,16 @@ function App() {
   }, [config])
 
   if (!config) {
-    return <main className="shell"><p>{status}</p></main>
+    return (
+      <main className="shell">
+        <section className={`status-panel ${saveState}`} role="status" aria-live="polite">
+          <div>
+            <strong>{status}</strong>
+            <p>{message}</p>
+          </div>
+        </section>
+      </main>
+    )
   }
 
   function updateSite<K extends keyof WordPagesConfig["site"]>(key: K, value: WordPagesConfig["site"][K]) {
@@ -68,16 +90,36 @@ function App() {
           : current.site.baseUrl
       }
     })
+    setSaveState("dirty")
+    setMessage("Unsaved changes. Click Save changes to write word-pages.config.json.")
   }
 
   async function save() {
-    setStatus("Saving")
-    const response = await fetch("/api/config", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(config)
-    })
-    setStatus(response.ok ? "Saved" : "Save failed")
+    try {
+      setStatus("Saving")
+      setSaveState("saving")
+      setMessage("Saving word-pages.config.json...")
+
+      const response = await fetch("/api/config", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(config)
+      })
+      const result = await response.json().catch(() => ({ message: "No response body" }))
+      if (!response.ok || result.ok === false) {
+        throw new Error(result.message ?? "Save failed")
+      }
+
+      const savedAt = new Date().toLocaleTimeString()
+      setStatus("Saved")
+      setSaveState("saved")
+      setLastSavedAt(savedAt)
+      setMessage(`Saved to word-pages.config.json at ${savedAt}. Run npm run preview in another terminal to rebuild the site.`)
+    } catch (error) {
+      setStatus("Save failed")
+      setSaveState("failed")
+      setMessage(error instanceof Error ? error.message : "Save failed")
+    }
   }
 
   return (
@@ -88,7 +130,17 @@ function App() {
           <h1>Configure your Obsidian-powered site.</h1>
           <p className="lede">This wizard writes local configuration only. It does not ask for GitHub credentials and does not upload your vault.</p>
         </div>
-        <button onClick={save}>Save</button>
+        <button type="button" onClick={save} disabled={saveState === "saving"}>
+          {saveState === "saving" ? "Saving..." : "Save changes"}
+        </button>
+      </section>
+
+      <section className={`status-panel ${saveState}`} role="status" aria-live="polite">
+        <div>
+          <strong>{status}</strong>
+          <p>{message}</p>
+        </div>
+        {lastSavedAt && <span>Last saved {lastSavedAt}</span>}
       </section>
 
       <section className="grid">
@@ -131,6 +183,27 @@ function App() {
         <p><strong>Rendered site:</strong> only Markdown with <code>publish: true</code> is staged for Quartz.</p>
         <p><strong>Repository source:</strong> if this repo is public, committed Markdown may be visible on GitHub even when it is not rendered.</p>
         <p><strong>Expected Pages URL:</strong> {pageUrl}</p>
+      </section>
+
+      <section className="next-steps">
+        <h2>Next steps</h2>
+        <div className="steps-grid">
+          <div>
+            <span>1</span>
+            <h3>Edit content</h3>
+            <p>Open <code>content/</code> in Obsidian and update pages, posts, and notes.</p>
+          </div>
+          <div>
+            <span>2</span>
+            <h3>Preview locally</h3>
+            <p>Run <code>npm run preview</code> in a second terminal. Quartz serves the site at its local preview URL.</p>
+          </div>
+          <div>
+            <span>3</span>
+            <h3>Publish</h3>
+            <p>Commit, push to GitHub, and enable Pages with GitHub Actions.</p>
+          </div>
+        </div>
       </section>
 
       <footer>
