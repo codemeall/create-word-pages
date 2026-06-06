@@ -60,7 +60,7 @@ button {
 }
 
 button:disabled {
-  cursor: wait;
+  cursor: not-allowed;
   opacity: 0.72;
 }
 
@@ -129,6 +129,17 @@ textarea {
   color: #1d1b16;
   background: #fffdf8;
   font: inherit;
+}
+
+input[aria-invalid="true"] {
+  border-color: #b83232;
+  outline-color: #b83232;
+}
+
+.field-error {
+  color: #9f2525;
+  font-size: 0.88rem;
+  font-weight: 700;
 }
 
 textarea {

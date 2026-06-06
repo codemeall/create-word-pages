@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { createRoot } from "react-dom/client"
+import { validateWordPagesConfig } from "./configValidation.js"
 import "./styles.css"
 
 type SaveState = "idle" | "dirty" | "saving" | "saved" | "failed"
@@ -22,6 +23,8 @@ type WordPagesConfig = {
     staged: string
   }
 }
+
+type SiteFieldErrors = Partial<Record<keyof WordPagesConfig["site"], string>>
 
 function deriveBaseUrl(username: string, repositoryName: string) {
   if (!username || !repositoryName) return ""
@@ -63,6 +66,12 @@ function App() {
     return displayPagesUrl(deriveBaseUrl(config.site.githubUsername, config.site.repositoryName))
   }, [config])
 
+  const fieldErrors = useMemo<SiteFieldErrors>(() => {
+    if (!config) return {}
+    return validateWordPagesConfig(config).fieldErrors
+  }, [config])
+  const canSave = Object.keys(fieldErrors).length === 0 && saveState !== "saving"
+
   if (!config) {
     return (
       <main className="shell">
@@ -95,6 +104,14 @@ function App() {
   }
 
   async function save() {
+    const validation = validateWordPagesConfig(config)
+    if (!validation.ok) {
+      setStatus("Required fields missing")
+      setSaveState("failed")
+      setMessage("Complete the required fields before saving word-pages.config.json.")
+      return
+    }
+
     try {
       setStatus("Saving")
       setSaveState("saving")
@@ -107,6 +124,9 @@ function App() {
       })
       const result = await response.json().catch(() => ({ message: "No response body" }))
       if (!response.ok || result.ok === false) {
+        if (result.fieldErrors) {
+          throw new Error(result.message ?? "Complete the required fields before saving.")
+        }
         throw new Error(result.message ?? "Save failed")
       }
 
@@ -130,7 +150,7 @@ function App() {
           <h1>Configure your Obsidian-powered site.</h1>
           <p className="lede">This wizard writes local configuration only. It does not ask for GitHub credentials and does not upload your vault.</p>
         </div>
-        <button type="button" onClick={save} disabled={saveState === "saving"}>
+        <button type="button" onClick={save} disabled={!canSave}>
           {saveState === "saving" ? "Saving..." : "Save changes"}
         </button>
       </section>
@@ -146,7 +166,8 @@ function App() {
       <section className="grid">
         <label>
           Site title
-          <input value={config.site.title} onChange={(event) => updateSite("title", event.target.value)} />
+          <input value={config.site.title} onChange={(event) => updateSite("title", event.target.value)} aria-invalid={Boolean(fieldErrors.title)} />
+          {fieldErrors.title && <span className="field-error">{fieldErrors.title}</span>}
         </label>
         <label>
           Author or organization
@@ -158,11 +179,13 @@ function App() {
         </label>
         <label>
           GitHub username
-          <input value={config.site.githubUsername} onChange={(event) => updateSite("githubUsername", event.target.value)} />
+          <input value={config.site.githubUsername} onChange={(event) => updateSite("githubUsername", event.target.value)} aria-invalid={Boolean(fieldErrors.githubUsername)} />
+          {fieldErrors.githubUsername && <span className="field-error">{fieldErrors.githubUsername}</span>}
         </label>
         <label>
           Repository name
-          <input value={config.site.repositoryName} onChange={(event) => updateSite("repositoryName", event.target.value)} />
+          <input value={config.site.repositoryName} onChange={(event) => updateSite("repositoryName", event.target.value)} aria-invalid={Boolean(fieldErrors.repositoryName)} />
+          {fieldErrors.repositoryName && <span className="field-error">{fieldErrors.repositoryName}</span>}
         </label>
         <label>
           Repository visibility
@@ -174,7 +197,8 @@ function App() {
         </label>
         <label>
           GitHub Pages base URL
-          <input value={config.site.baseUrl} onChange={(event) => updateSite("baseUrl", event.target.value)} />
+          <input value={config.site.baseUrl} onChange={(event) => updateSite("baseUrl", event.target.value)} aria-invalid={Boolean(fieldErrors.baseUrl)} />
+          {fieldErrors.baseUrl && <span className="field-error">{fieldErrors.baseUrl}</span>}
         </label>
       </section>
 
