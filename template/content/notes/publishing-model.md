@@ -17,3 +17,5 @@ Word Pages stages publishable notes into Quartz routes before building the stati
 - `note` content becomes `/notes/:slug/`.
 
 Only files with `publish: true` are rendered. Source privacy still depends on repository visibility.
+
+Images embedded from published Markdown with Obsidian syntax, such as `![[hero.png]]`, are copied into the generated site when they exist in the vault assets folder.

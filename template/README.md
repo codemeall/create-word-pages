@@ -37,6 +37,16 @@ Supported types:
 
 Wikilinks, backlinks, graph view, tags, search, and dark/light mode are provided by Quartz.
 
+## Images
+
+Store public images in `content/assets/images/` and embed them from Obsidian:
+
+```markdown
+![[hero.png]]
+```
+
+When you run `npm run preview` or `npm run build`, referenced images from published Markdown are copied into the Quartz build input. Draft-only images are not staged unless a published file links to them.
+
 ## GitHub Pages
 
 The included workflow builds the site with GitHub Actions and publishes the generated `public/` folder.

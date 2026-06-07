@@ -45,6 +45,14 @@ Supported content types:
 
 The generated site is built by Quartz and can be deployed by the included GitHub Actions workflow.
 
+Images can live under `content/assets/images/` and be embedded from Obsidian with syntax like:
+
+```markdown
+![[hero.png]]
+```
+
+During `npm run preview` or `npm run build`, Word Pages copies only image assets referenced by published Markdown into the Quartz build input and rewrites those embeds to public site paths.
+
 ## GitHub Pages Setup
 
 1. Create a new GitHub repository.

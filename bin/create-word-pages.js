@@ -7,6 +7,10 @@ import { fileURLToPath } from "node:url"
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const packageRoot = path.resolve(__dirname, "..")
 const templateRoot = path.join(packageRoot, "template")
+const templateDotfiles = new Map([
+  ["_gitignore", ".gitignore"],
+  ["_npmrc", ".npmrc"]
+])
 
 const rawTarget = process.argv[2] ?? "word-pages-site"
 const targetDir = path.resolve(process.cwd(), rawTarget)
@@ -46,6 +50,24 @@ async function replacePlaceholders(filePath) {
   }
 }
 
+async function restoreTemplateDotfiles(dir) {
+  for (const [templateName, dotfileName] of templateDotfiles) {
+    const source = path.join(dir, templateName)
+    if (!await exists(source)) continue
+
+    await cp(source, path.join(dir, dotfileName))
+  }
+}
+
+async function exists(filePath) {
+  try {
+    await stat(filePath)
+    return true
+  } catch {
+    return false
+  }
+}
+
 async function walk(dir, visitor) {
   const entries = await readdir(dir, { withFileTypes: true })
   for (const entry of entries) {
@@ -61,6 +83,7 @@ async function walk(dir, visitor) {
 try {
   await ensureEmptyOrCreate(targetDir)
   await cp(templateRoot, targetDir, { recursive: true })
+  await restoreTemplateDotfiles(targetDir)
   await walk(targetDir, replacePlaceholders)
 
   console.log(`Created Word Pages starter in ${targetDir}`)

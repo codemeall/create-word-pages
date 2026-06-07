@@ -1,4 +1,4 @@
-import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises"
+import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises"
 import path from "node:path"
 import { parseFrontmatter, stringifyFrontmatter } from "./frontmatter.mjs"
 
@@ -8,6 +8,7 @@ const sourceRoot = path.join(root, config.content.source)
 const stagedRoot = path.join(root, config.content.staged)
 
 const allowedTypes = new Set(["page", "post", "note"])
+const imageExtensions = new Set([".avif", ".gif", ".jpeg", ".jpg", ".png", ".svg", ".webp"])
 
 function slugify(value) {
   return String(value ?? "")
@@ -33,6 +34,69 @@ async function collectMarkdown(dir) {
   return files
 }
 
+async function collectAssets(dir) {
+  const entries = await readdir(dir, { withFileTypes: true })
+  const assets = []
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name)
+    if (entry.isDirectory()) {
+      if (entry.name === ".obsidian") continue
+      assets.push(...await collectAssets(fullPath))
+    } else if (!entry.name.endsWith(".md")) {
+      assets.push(fullPath)
+    }
+  }
+  return assets
+}
+
+function normalizeAssetPath(value) {
+  return value.replaceAll("\\", "/").replace(/^\/+/, "")
+}
+
+function buildAssetIndex(assetFiles) {
+  const index = new Map()
+  for (const file of assetFiles) {
+    const relativePath = normalizeAssetPath(path.relative(sourceRoot, file))
+    const keys = [
+      relativePath,
+      relativePath.toLowerCase(),
+      path.basename(relativePath),
+      path.basename(relativePath).toLowerCase()
+    ]
+
+    for (const key of keys) {
+      if (!index.has(key)) index.set(key, { sourcePath: file, relativePath })
+    }
+  }
+  return index
+}
+
+function markdownLinkPath(fromOutputPath, assetRelativePath) {
+  const fromDir = path.dirname(fromOutputPath)
+  const relativePath = normalizeAssetPath(path.relative(fromDir, assetRelativePath))
+  return encodeURI(relativePath.startsWith(".") ? relativePath : `./${relativePath}`)
+}
+
+function rewriteObsidianImageEmbeds(content, outputRelativePath, assetIndex, referencedAssets) {
+  return content.replace(/!\[\[([^\]\r\n]+)\]\]/g, (match, rawTarget) => {
+    const [rawPath, rawLabel] = rawTarget.split("|")
+    const targetPath = normalizeAssetPath(rawPath.trim())
+    const extension = path.extname(targetPath).toLowerCase()
+
+    if (!imageExtensions.has(extension)) return match
+
+    const asset = assetIndex.get(targetPath) ?? assetIndex.get(targetPath.toLowerCase()) ?? assetIndex.get(path.basename(targetPath).toLowerCase())
+    if (!asset) return match
+
+    referencedAssets.set(asset.relativePath, asset.sourcePath)
+
+    const label = rawLabel?.trim()
+    const altText = label && !/^\d+(x\d+)?$/.test(label) ? label : path.basename(asset.relativePath, extension)
+    const linkPath = markdownLinkPath(outputRelativePath, asset.relativePath)
+    return `![${altText}](${linkPath})`
+  })
+}
+
 function routeFor(filePath, data) {
   const type = String(data.type ?? "").toLowerCase()
   if (!allowedTypes.has(type)) {
@@ -53,6 +117,8 @@ await rm(stagedRoot, { recursive: true, force: true })
 await mkdir(stagedRoot, { recursive: true })
 
 const files = await collectMarkdown(sourceRoot)
+const assetIndex = buildAssetIndex(await collectAssets(sourceRoot))
+const referencedAssets = new Map()
 let published = 0
 
 for (const file of files) {
@@ -69,7 +135,9 @@ for (const file of files) {
     title: parsed.data.title ?? path.basename(file, ".md")
   }
 
-  await writeFile(outputPath, stringifyFrontmatter(parsed.content.trimStart(), data))
+  const content = rewriteObsidianImageEmbeds(parsed.content.trimStart(), relativeOutput, assetIndex, referencedAssets)
+
+  await writeFile(outputPath, stringifyFrontmatter(content, data))
   published += 1
 }
 
@@ -77,4 +145,10 @@ if (published === 0) {
   throw new Error("No publishable Markdown files found. Add publish: true to at least one content file.")
 }
 
-console.log(`Prepared ${published} publishable Markdown files for Quartz.`)
+for (const [relativePath, sourcePath] of referencedAssets) {
+  const outputPath = path.join(stagedRoot, relativePath)
+  await mkdir(path.dirname(outputPath), { recursive: true })
+  await copyFile(sourcePath, outputPath)
+}
+
+console.log(`Prepared ${published} publishable Markdown files and ${referencedAssets.size} referenced assets for Quartz.`)
