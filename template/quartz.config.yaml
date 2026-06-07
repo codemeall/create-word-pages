@@ -40,8 +40,6 @@ configuration:
         highlight: rgba(115, 198, 182, 0.16)
         textHighlight: "#5e4d18"
 plugins:
-  - source: ../../markdown-pages-plugins/graph-frontmatter-condition
-    enabled: true
   - source: github:quartz-community/created-modified-date
     enabled: true
     options:
@@ -85,6 +83,8 @@ plugins:
     options:
       enableSiteMap: true
       enableRSS: true
+  - source: github:quartz-community/og-image
+    enabled: true
   - source: github:quartz-community/content-page
     enabled: true
   - source: github:quartz-community/folder-page
@@ -115,6 +115,13 @@ plugins:
     layout:
       position: right
       priority: 50
+  - source: ../../markdown-pages-plugins/footer
+    enabled: true
+    options:
+      siteTitle: __MARKDOWN_PAGES_TITLE__
+      showAttribution: __MARKDOWN_PAGES_SHOW_ATTRIBUTION__
+      attributionText: __MARKDOWN_PAGES_ATTRIBUTION_TEXT__
+      attributionUrl: __MARKDOWN_PAGES_ATTRIBUTION_URL__
   - source: github:quartz-community/article-title
     enabled: true
     layout:

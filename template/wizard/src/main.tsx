@@ -18,6 +18,11 @@ type WordPagesConfig = {
   theme: {
     preset: string
   }
+  branding: {
+    showAttribution: boolean
+    attributionText: string
+    attributionUrl: string
+  }
   content: {
     source: string
     staged: string
@@ -36,6 +41,17 @@ function displayPagesUrl(baseUrl: string) {
   return baseUrl ? `https://${baseUrl}/` : "Configure GitHub details to preview the Pages URL."
 }
 
+function normalizeConfig(data: WordPagesConfig): WordPagesConfig {
+  return {
+    ...data,
+    branding: {
+      showAttribution: data.branding?.showAttribution !== false,
+      attributionText: data.branding?.attributionText ?? "Built with Markdown Pages",
+      attributionUrl: data.branding?.attributionUrl ?? "https://www.npmjs.com/package/@codemeall/create-markdown-pages"
+    }
+  }
+}
+
 function App() {
   const [config, setConfig] = useState<WordPagesConfig | null>(null)
   const [status, setStatus] = useState("Loading")
@@ -50,7 +66,7 @@ function App() {
         return response.json()
       })
       .then((data) => {
-        setConfig(data)
+        setConfig(normalizeConfig(data))
         setStatus("Ready")
         setMessage("Configuration loaded from markdown-pages.config.json.")
       })
@@ -97,6 +113,18 @@ function App() {
             key === "repositoryName" ? String(value) : current.site.repositoryName
           )
           : current.site.baseUrl
+      }
+    })
+    setSaveState("dirty")
+    setMessage("Unsaved changes. Click Save changes to write markdown-pages.config.json.")
+  }
+
+  function updateBranding<K extends keyof WordPagesConfig["branding"]>(key: K, value: WordPagesConfig["branding"][K]) {
+    setConfig((current) => current && {
+      ...current,
+      branding: {
+        ...current.branding,
+        [key]: value
       }
     })
     setSaveState("dirty")
@@ -207,6 +235,36 @@ function App() {
         <p><strong>Rendered site:</strong> only Markdown with <code>publish: true</code> is staged for Quartz.</p>
         <p><strong>Repository source:</strong> if this repo is public, committed Markdown may be visible on GitHub even when it is not rendered.</p>
         <p><strong>Expected Pages URL:</strong> {pageUrl}</p>
+      </section>
+
+      <section className="notice branding-panel">
+        <h2>Generated site footer</h2>
+        <label className="checkbox-row">
+          <input
+            type="checkbox"
+            checked={config.branding.showAttribution}
+            onChange={(event) => updateBranding("showAttribution", event.target.checked)}
+          />
+          Show Markdown Pages attribution
+        </label>
+        <div className="grid compact-grid">
+          <label>
+            Attribution text
+            <input
+              value={config.branding.attributionText}
+              onChange={(event) => updateBranding("attributionText", event.target.value)}
+              disabled={!config.branding.showAttribution}
+            />
+          </label>
+          <label>
+            Attribution link
+            <input
+              value={config.branding.attributionUrl}
+              onChange={(event) => updateBranding("attributionUrl", event.target.value)}
+              disabled={!config.branding.showAttribution}
+            />
+          </label>
+        </div>
       </section>
 
       <section className="next-steps">

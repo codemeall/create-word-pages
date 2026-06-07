@@ -1,0 +1,28 @@
+{
+  "name": "footer",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./components": "./dist/components/index.js"
+  },
+  "peerDependencies": {
+    "preact": "*"
+  },
+  "quartz": {
+    "name": "footer",
+    "displayName": "Markdown Pages Footer",
+    "description": "Replaces the default Quartz footer with Markdown Pages attribution.",
+    "version": "0.1.0",
+    "category": "component",
+    "components": {
+      "Footer": {
+        "name": "Footer",
+        "displayName": "Markdown Pages Footer",
+        "description": "Shows the site title and optional Markdown Pages attribution.",
+        "version": "0.1.0"
+      }
+    }
+  }
+}

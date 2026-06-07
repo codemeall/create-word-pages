@@ -11,6 +11,11 @@
   "theme": {
     "preset": "clean-garden"
   },
+  "branding": {
+    "showAttribution": true,
+    "attributionText": "Built with Markdown Pages",
+    "attributionUrl": "https://www.npmjs.com/package/@codemeall/create-markdown-pages"
+  },
   "content": {
     "source": "content",
     "staged": ".markdown-pages/quartz-content"
