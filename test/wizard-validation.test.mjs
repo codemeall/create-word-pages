@@ -4,7 +4,7 @@ import { validateWordPagesConfig } from "../template/wizard/src/configValidation
 
 const validConfig = {
   site: {
-    title: "Word Pages",
+    title: "Markdown Pages",
     description: "",
     author: "",
     githubUsername: "octocat",

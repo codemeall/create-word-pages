@@ -1,0 +1,13 @@
+{
+  "name": "markdown-pages-graph-frontmatter-condition",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "index.ts",
+  "quartz": {
+    "name": "markdown-pages-graph-frontmatter-condition",
+    "displayName": "Markdown Pages Graph Frontmatter Condition",
+    "description": "Adds a graph frontmatter toggle for Markdown Pages generated sites.",
+    "version": "0.1.0",
+    "category": "component"
+  }
+}

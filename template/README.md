@@ -1,6 +1,6 @@
-# Word Pages Starter
+# Markdown Pages Starter
 
-Word Pages publishes an Obsidian-authored Markdown vault to GitHub Pages with a Quartz-powered reading experience.
+Markdown Pages publishes an Obsidian-authored Markdown vault to GitHub Pages with a Quartz-powered reading experience.
 
 ## Quick Start
 
@@ -67,7 +67,7 @@ If the deploy job fails with `Failed to create deployment (status: 404)`, GitHub
 
 For project Pages, set your GitHub username and repository name in the wizard so the Quartz `baseUrl` is correct. Quartz expects this value without protocol or slashes, for example `octocat.github.io/my-site`.
 
-Custom domains are supported by GitHub Pages, but Word Pages v1 only documents that workflow and does not automate DNS setup.
+Custom domains are supported by GitHub Pages, but Markdown Pages v1 only documents that workflow and does not automate DNS setup.
 
 ## Import Jekyll Posts
 

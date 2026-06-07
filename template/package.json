@@ -1,5 +1,5 @@
 {
-  "name": "__WORD_PAGES_PROJECT_NAME__",
+  "name": "__MARKDOWN_PAGES_PROJECT_NAME__",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -25,7 +25,7 @@
     "node": ">=22",
     "npm": ">=10.9"
   },
-  "wordPages": {
+  "markdownPages": {
     "quartzRepository": "https://github.com/jackyzha0/quartz.git"
   }
 }

@@ -11,4 +11,4 @@ tags:
 
 Add your profile, services, contact links, or agency positioning here.
 
-Word Pages keeps the public site static and lets GitHub Pages host it from your repository.
+Markdown Pages keeps the public site static and lets GitHub Pages host it from your repository.

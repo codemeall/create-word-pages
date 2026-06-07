@@ -1,10 +1,10 @@
 {
-  "name": "@codemeall/create-word-pages",
+  "name": "@codemeall/create-markdown-pages",
   "version": "0.1.8",
-  "description": "Scaffold a Word Pages Obsidian-to-GitHub-Pages starter.",
+  "description": "Scaffold a Markdown Pages Obsidian-to-GitHub-Pages starter.",
   "type": "module",
   "bin": {
-    "create-word-pages": "./bin/create-word-pages.js"
+    "create-markdown-pages": "./bin/create-markdown-pages.js"
   },
   "files": [
     "bin",

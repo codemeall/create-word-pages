@@ -10,7 +10,7 @@ tags:
 
 # Publishing Model
 
-Word Pages stages publishable notes into Quartz routes before building the static site.
+Markdown Pages stages publishable notes into Quartz routes before building the static site.
 
 - `page` content becomes top-level pages.
 - `post` content becomes `/posts/:slug/`.

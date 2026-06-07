@@ -1,15 +1,15 @@
 ---
-title: "Launching Word Pages"
+title: "Launching Markdown Pages"
 type: post
-slug: launching-word-pages
+slug: launching-markdown-pages
 publish: true
 date: 2026-06-06
 tags:
   - writing
-  - word-pages
+  - markdown-pages
 ---
 
-# Launching Word Pages
+# Launching Markdown Pages
 
 This sample post shows the blog side of your Obsidian vault.
 

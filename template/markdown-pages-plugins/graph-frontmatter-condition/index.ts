@@ -6,7 +6,7 @@ const conditionsModule = await import(
 )
 const { registerCondition } = conditionsModule
 
-registerCondition("word-pages-graph-enabled", (props) => {
+registerCondition("markdown-pages-graph-enabled", (props) => {
   const frontmatter = props.fileData.frontmatter ?? {}
   return frontmatter.graph !== false && frontmatter.enableGraph !== false
 })

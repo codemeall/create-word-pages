@@ -3,7 +3,7 @@ import path from "node:path"
 import { parseFrontmatter, stringifyFrontmatter } from "./frontmatter.mjs"
 
 const root = process.cwd()
-const config = JSON.parse(await readFile(path.join(root, "word-pages.config.json"), "utf8"))
+const config = JSON.parse(await readFile(path.join(root, "markdown-pages.config.json"), "utf8"))
 const sourceRoot = path.join(root, config.content.source)
 const stagedRoot = path.join(root, config.content.staged)
 const publicAssetsRoot = path.join(root, "assets")

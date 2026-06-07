@@ -4,7 +4,7 @@ import path from "node:path"
 
 const root = process.cwd()
 const scriptsDir = path.join(root, "scripts")
-const configPath = path.join(root, "word-pages.config.json")
+const configPath = path.join(root, "markdown-pages.config.json")
 const quartzConfigPath = path.join(root, "quartz.config.yaml")
 const pollMs = 1000
 
@@ -49,7 +49,7 @@ async function collectFiles(targetPath, files = []) {
   if (info.isDirectory()) {
     const entries = await readdir(targetPath, { withFileTypes: true })
     for (const entry of entries) {
-      if (entry.name === ".obsidian" || entry.name === ".git" || entry.name === ".word-pages" || entry.name === "node_modules") {
+      if (entry.name === ".obsidian" || entry.name === ".git" || entry.name === ".markdown-pages" || entry.name === "node_modules") {
         continue
       }
 
@@ -140,7 +140,7 @@ async function handleChanges(changedFiles) {
 
   handlingChanges = true
   try {
-    const configChanged = changedFiles.includes("word-pages.config.json") || changedFiles.includes("quartz.config.yaml")
+    const configChanged = changedFiles.includes("markdown-pages.config.json") || changedFiles.includes("quartz.config.yaml")
     const label = changedFiles.length === 1 ? changedFiles[0] : `${changedFiles.length} files`
     console.log(`\nDetected local change in ${label}. Updating preview...`)
 
@@ -199,5 +199,5 @@ await runNodeScript("install-quartz.mjs")
 lastSnapshot = await snapshotWatchedFiles()
 startQuartz()
 
-console.log("Watching content/, assets/, word-pages.config.json, and quartz.config.yaml for local preview updates.")
+console.log("Watching content/, assets/, markdown-pages.config.json, and quartz.config.yaml for local preview updates.")
 setInterval(pollForChanges, pollMs).unref()

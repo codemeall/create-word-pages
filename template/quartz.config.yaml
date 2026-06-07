@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: __WORD_PAGES_TITLE__
+  pageTitle: __MARKDOWN_PAGES_TITLE__
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
   analytics: null
   locale: en-US
-  baseUrl: __WORD_PAGES_BASE_URL__
+  baseUrl: __MARKDOWN_PAGES_BASE_URL__
   ignorePatterns:
     - private
     - templates
@@ -40,7 +40,7 @@ configuration:
         highlight: rgba(115, 198, 182, 0.16)
         textHighlight: "#5e4d18"
 plugins:
-  - source: ../../word-pages-plugins/graph-frontmatter-condition
+  - source: ../../markdown-pages-plugins/graph-frontmatter-condition
     enabled: true
   - source: github:quartz-community/created-modified-date
     enabled: true
@@ -101,7 +101,7 @@ plugins:
     layout:
       position: right
       priority: 10
-      condition: word-pages-graph-enabled
+      condition: markdown-pages-graph-enabled
   - source: github:quartz-community/search
     enabled: true
     layout:

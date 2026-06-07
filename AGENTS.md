@@ -1,13 +1,13 @@
-# Word Pages Agent Notes
+# Markdown Pages Agent Notes
 
 ## Project Summary
 
-Word Pages is an open-source npm starter that scaffolds an Obsidian-authored Markdown site into a Quartz-powered portfolio, blog, and knowledge-base site deployable to GitHub Pages.
+Markdown Pages is an open-source npm starter that scaffolds an Obsidian-authored Markdown site into a Quartz-powered portfolio, blog, and knowledge-base site deployable to GitHub Pages.
 
 The package is published as:
 
 ```bash
-npx @codemeall/create-word-pages my-site
+npx @codemeall/create-markdown-pages my-site
 ```
 
 The generated site is intentionally local-first:
@@ -25,7 +25,7 @@ The project started from a product plan to give users a jzhao/Quartz-like public
 Key decisions made:
 
 - Use Quartz 5 as the rendering engine instead of rebuilding Obsidian-compatible parsing, backlinks, graph, search, and wikilinks.
-- Distribute through npm as `@codemeall/create-word-pages`.
+- Distribute through npm as `@codemeall/create-markdown-pages`.
 - Scaffold a full starter repo rather than only a theme or docs.
 - Use `content/` as the Obsidian vault folder inside the generated repo.
 - Require `publish: true` before Markdown is staged for public rendering.
@@ -38,15 +38,15 @@ The wizard was later improved because Save originally appeared unresponsive. It 
 
 Important files in this package repo:
 
-- `package.json`: npm package metadata for `@codemeall/create-word-pages`.
-- `bin/create-word-pages.js`: CLI entrypoint that copies `template/` into a new target folder and replaces project-name placeholders.
+- `package.json`: npm package metadata for `@codemeall/create-markdown-pages`.
+- `bin/create-markdown-pages.js`: CLI entrypoint that copies `template/` into a new target folder and replaces project-name placeholders.
 - `README.md`: public npm/GitHub instructions for clients.
 - `template/`: the full generated starter site.
 
 Important files inside `template/`:
 
 - `template/package.json`: generated site commands and dependencies.
-- `template/word-pages.config.json`: local site config edited by the wizard.
+- `template/markdown-pages.config.json`: local site config edited by the wizard.
 - `template/content/`: sample Obsidian vault with pages, posts, notes, and templates.
 - `template/wizard/`: Vite React local setup wizard.
 - `template/scripts/prepare-quartz-content.mjs`: stages publishable Markdown for Quartz.
@@ -56,14 +56,14 @@ Important files inside `template/`:
 - `template/scripts/frontmatter.mjs`: small local frontmatter parser/stringifier used by scripts without external runtime deps.
 - `template/quartz.config.yaml`: Quartz config template with placeholders for title and base URL.
 - `template/.github/workflows/pages.yml`: GitHub Pages deployment workflow.
-- `template/.npmrc`: generated-site npm cache override, `cache=.word-pages/npm-cache`.
+- `template/.npmrc`: generated-site npm cache override, `cache=.markdown-pages/npm-cache`.
 
 ## Generated Site Workflow
 
 Client flow:
 
 ```bash
-npx @codemeall/create-word-pages my-site
+npx @codemeall/create-markdown-pages my-site
 cd my-site
 npm install
 npm run wizard
@@ -76,7 +76,7 @@ Preview runs separately through Quartz, usually `http://localhost:8080`.
 
 This separation is expected:
 
-- `npm run wizard` edits `word-pages.config.json`.
+- `npm run wizard` edits `markdown-pages.config.json`.
 - `npm run preview` stages content, installs/updates Quartz, and serves the static site.
 
 Production build:
@@ -125,7 +125,7 @@ Privacy rule:
 
 ## Wizard Behavior
 
-The local wizard edits `word-pages.config.json`.
+The local wizard edits `markdown-pages.config.json`.
 
 Current fields:
 
@@ -144,8 +144,8 @@ The wizard derives Quartz `baseUrl` as:
 
 The wizard API is implemented in `template/wizard/vite.config.ts`:
 
-- `GET /api/config`: reads `word-pages.config.json`
-- `POST /api/config`: writes `word-pages.config.json`
+- `GET /api/config`: reads `markdown-pages.config.json`
+- `POST /api/config`: writes `markdown-pages.config.json`
 
 The React UI shows:
 
@@ -158,7 +158,7 @@ The React UI shows:
 
 ## Quartz Integration
 
-Word Pages does not depend on the npm package named `quartz`, because that package is not the official Quartz project.
+Markdown Pages does not depend on the npm package named `quartz`, because that package is not the official Quartz project.
 
 Instead, generated sites clone the official Quartz repo:
 
@@ -169,15 +169,15 @@ https://github.com/jackyzha0/quartz.git
 The clone is stored in:
 
 ```text
-.word-pages/quartz
+.markdown-pages/quartz
 ```
 
 Generated and cache directories:
 
-- `.word-pages/quartz`
-- `.word-pages/quartz-content`
-- `.word-pages/npm-cache`
-- `.word-pages/quartz/public`
+- `.markdown-pages/quartz`
+- `.markdown-pages/quartz-content`
+- `.markdown-pages/npm-cache`
+- `.markdown-pages/quartz/public`
 
 These are ignored by the generated site's `.gitignore`.
 
@@ -225,7 +225,7 @@ Validated during development:
 - Full generated `npm run build` succeeds with Quartz 5.
 - Quartz emitted a static site from imported/sample Markdown.
 - Wizard `GET /api/config` works.
-- Wizard `POST /api/config` writes `word-pages.config.json`.
+- Wizard `POST /api/config` writes `markdown-pages.config.json`.
 - `npm test` passes, though there are currently no real tests.
 
 ## Current Limitations
@@ -272,13 +272,13 @@ Potential product expansion:
 The npm package is scoped:
 
 ```text
-@codemeall/create-word-pages
+@codemeall/create-markdown-pages
 ```
 
 Clients should use:
 
 ```bash
-npx @codemeall/create-word-pages my-site
+npx @codemeall/create-markdown-pages my-site
 ```
 
 After changes:

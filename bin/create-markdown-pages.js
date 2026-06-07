@@ -12,7 +12,7 @@ const templateDotfiles = new Map([
   ["_npmrc", ".npmrc"]
 ])
 
-const rawTarget = process.argv[2] ?? "word-pages-site"
+const rawTarget = process.argv[2] ?? "markdown-pages-site"
 const targetDir = path.resolve(process.cwd(), rawTarget)
 const projectName = path.basename(targetDir)
 
@@ -45,7 +45,7 @@ async function replacePlaceholders(filePath) {
   if (!textExtensions.has(path.extname(filePath))) return
 
   const source = await readFile(filePath, "utf8")
-  const updated = source.replaceAll("__WORD_PAGES_PROJECT_NAME__", projectName)
+  const updated = source.replaceAll("__MARKDOWN_PAGES_PROJECT_NAME__", projectName)
   if (updated !== source) {
     await writeFile(filePath, updated)
   }
@@ -87,7 +87,7 @@ try {
   await restoreTemplateDotfiles(targetDir)
   await walk(targetDir, replacePlaceholders)
 
-  console.log(`Created Word Pages starter in ${targetDir}`)
+  console.log(`Created Markdown Pages starter in ${targetDir}`)
   console.log("")
   console.log("Next steps:")
   console.log(`  cd ${path.relative(process.cwd(), targetDir) || "."}`)

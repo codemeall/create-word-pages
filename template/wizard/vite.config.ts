@@ -4,14 +4,14 @@ import { readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
 import { validateWordPagesConfig } from "./src/configValidation.js"
 
-const configPath = path.resolve(process.cwd(), "word-pages.config.json")
+const configPath = path.resolve(process.cwd(), "markdown-pages.config.json")
 let printedCompletionHandoff = false
 
 function printCompletionHandoff() {
   if (printedCompletionHandoff) return
   printedCompletionHandoff = true
   console.log(`
-Word Pages setup saved.
+Markdown Pages setup saved.
 
 Next steps:
 1. Open content/ in Obsidian and edit your pages, posts, and notes.
@@ -25,7 +25,7 @@ export default defineConfig({
   plugins: [
     react(),
     {
-      name: "word-pages-config-api",
+      name: "markdown-pages-config-api",
       configureServer(server) {
         server.middlewares.use("/api/config", async (req, res) => {
           try {

@@ -46,13 +46,13 @@ function App() {
   useEffect(() => {
     fetch("/api/config")
       .then((response) => {
-        if (!response.ok) throw new Error("Could not load word-pages.config.json")
+        if (!response.ok) throw new Error("Could not load markdown-pages.config.json")
         return response.json()
       })
       .then((data) => {
         setConfig(data)
         setStatus("Ready")
-        setMessage("Configuration loaded from word-pages.config.json.")
+        setMessage("Configuration loaded from markdown-pages.config.json.")
       })
       .catch((error) => {
         setStatus("Could not load configuration")
@@ -100,7 +100,7 @@ function App() {
       }
     })
     setSaveState("dirty")
-    setMessage("Unsaved changes. Click Save changes to write word-pages.config.json.")
+    setMessage("Unsaved changes. Click Save changes to write markdown-pages.config.json.")
   }
 
   async function save() {
@@ -108,14 +108,14 @@ function App() {
     if (!validation.ok) {
       setStatus("Required fields missing")
       setSaveState("failed")
-      setMessage("Complete the required fields before saving word-pages.config.json.")
+      setMessage("Complete the required fields before saving markdown-pages.config.json.")
       return
     }
 
     try {
       setStatus("Saving")
       setSaveState("saving")
-      setMessage("Saving word-pages.config.json...")
+      setMessage("Saving markdown-pages.config.json...")
 
       const response = await fetch("/api/config", {
         method: "POST",
@@ -134,7 +134,7 @@ function App() {
       setStatus("Saved")
       setSaveState("saved")
       setLastSavedAt(savedAt)
-      setMessage(`Saved to word-pages.config.json at ${savedAt}. Keep npm run preview open in another terminal to refresh the local site.`)
+      setMessage(`Saved to markdown-pages.config.json at ${savedAt}. Keep npm run preview open in another terminal to refresh the local site.`)
     } catch (error) {
       setStatus("Save failed")
       setSaveState("failed")
@@ -146,7 +146,7 @@ function App() {
     <main className="shell">
       <section className="hero">
         <div>
-          <p className="eyebrow">Word Pages setup</p>
+          <p className="eyebrow">Markdown Pages setup</p>
           <h1>Configure your Obsidian-powered site.</h1>
           <p className="lede">This wizard writes local configuration only. It does not ask for GitHub credentials and does not upload your vault.</p>
         </div>

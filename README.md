@@ -1,6 +1,6 @@
-# Word Pages
+# Markdown Pages
 
-Word Pages turns an Obsidian-authored Markdown vault into a Quartz-powered portfolio, blog, and knowledge-base site that can be deployed to GitHub Pages.
+Markdown Pages turns an Obsidian-authored Markdown vault into a Quartz-powered portfolio, blog, and knowledge-base site that can be deployed to GitHub Pages.
 
 It is designed for people who want to manage content locally in Obsidian, keep source files in GitHub, and publish a static public site without paid sync or hosted storage.
 
@@ -16,7 +16,7 @@ Requirements:
 Create a new site:
 
 ```bash
-npx @codemeall/create-word-pages my-site
+npx @codemeall/create-markdown-pages my-site
 cd my-site
 npm install
 npm run wizard
@@ -27,7 +27,7 @@ Open the `content/` folder in Obsidian and start editing.
 
 ## How Publishing Works
 
-Word Pages uses `content/` as the Obsidian vault. Markdown files render only when they include:
+Markdown Pages uses `content/` as the Obsidian vault. Markdown files render only when they include:
 
 ```yaml
 ---
@@ -54,9 +54,9 @@ Images can live under `content/assets/images/` or root-level `assets/images/` an
 ![[hero.png]]
 ```
 
-During `npm run preview` or `npm run build`, Word Pages copies only image assets referenced by published Markdown into the Quartz build input and rewrites those embeds to public site paths.
+During `npm run preview` or `npm run build`, Markdown Pages copies only image assets referenced by published Markdown into the Quartz build input and rewrites those embeds to public site paths.
 
-Local preview stays live while it runs. When you save published Markdown, referenced assets, or site config locally, Word Pages restages the Quartz input so you can verify the site before pushing to GitHub Pages.
+Local preview stays live while it runs. When you save published Markdown, referenced assets, or site config locally, Markdown Pages restages the Quartz input so you can verify the site before pushing to GitHub Pages.
 
 ## GitHub Pages Setup
 
@@ -118,7 +118,7 @@ Stage only publishable Markdown into the Quartz build input.
 
 ## Client Handoff Checklist
 
-- Create the site with `npx @codemeall/create-word-pages client-site`.
+- Create the site with `npx @codemeall/create-markdown-pages client-site`.
 - Run the wizard and set the correct GitHub username and repository name.
 - Open `content/` in Obsidian.
 - Replace the sample home, about, post, and note files.

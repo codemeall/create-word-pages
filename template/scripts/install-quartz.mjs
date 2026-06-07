@@ -3,8 +3,8 @@ import { spawn } from "node:child_process"
 import path from "node:path"
 
 const root = process.cwd()
-const quartzDir = path.join(root, ".word-pages", "quartz")
-const npmCache = path.join(root, ".word-pages", "npm-cache")
+const quartzDir = path.join(root, ".markdown-pages", "quartz")
+const npmCache = path.join(root, ".markdown-pages", "npm-cache")
 const quartzRepo = "https://github.com/jackyzha0/quartz.git"
 
 function run(command, args, options = {}) {
@@ -45,11 +45,11 @@ if (!await exists(path.join(quartzDir, "node_modules"))) {
   })
 }
 
-const config = JSON.parse(await readFile(path.join(root, "word-pages.config.json"), "utf8"))
+const config = JSON.parse(await readFile(path.join(root, "markdown-pages.config.json"), "utf8"))
 const configTemplate = await readFile(path.join(root, "quartz.config.yaml"), "utf8")
 const renderedConfig = configTemplate
-  .replaceAll("__WORD_PAGES_TITLE__", JSON.stringify(config.site.title))
-  .replaceAll("__WORD_PAGES_BASE_URL__", JSON.stringify(config.site.baseUrl))
+  .replaceAll("__MARKDOWN_PAGES_TITLE__", JSON.stringify(config.site.title))
+  .replaceAll("__MARKDOWN_PAGES_BASE_URL__", JSON.stringify(config.site.baseUrl))
 
 await writeFile(path.join(quartzDir, "quartz.config.yaml"), renderedConfig)
 await run("npm", ["exec", "quartz", "--", "plugin", "install", "--from-config"], {
