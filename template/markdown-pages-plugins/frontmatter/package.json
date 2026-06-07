@@ -1,0 +1,17 @@
+{
+  "name": "frontmatter",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "quartz": {
+    "name": "frontmatter",
+    "displayName": "Markdown Pages Frontmatter",
+    "description": "Parses Markdown Pages YAML frontmatter for Quartz filters and components.",
+    "version": "0.1.0",
+    "category": "transformer",
+    "defaultOrder": 0
+  }
+}

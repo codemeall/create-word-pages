@@ -40,6 +40,12 @@ configuration:
         highlight: rgba(115, 198, 182, 0.16)
         textHighlight: "#5e4d18"
 plugins:
+  - source: ../../markdown-pages-plugins/frontmatter
+    enabled: true
+    options:
+      delimiters: ---
+      language: yaml
+    order: 0
   - source: github:quartz-community/created-modified-date
     enabled: true
     options:
