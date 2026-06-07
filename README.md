@@ -23,7 +23,7 @@ npm run wizard
 npm run preview
 ```
 
-Open the `content/` folder in Obsidian and start editing.
+The wizard opens in your default browser. After saving, return to the terminal, press `Ctrl+C` to stop the wizard, then run `npm run preview`. Open the `content/` folder in Obsidian and start editing.
 
 ## How Publishing Works
 
@@ -96,7 +96,7 @@ The importer copies posts into `content/posts`, adds `type: post`, adds `publish
 npm run wizard
 ```
 
-Configure site identity, GitHub Pages URL details, and visibility guidance.
+Configure site identity, GitHub Pages URL details, and visibility guidance. This opens the local wizard in your default browser.
 
 ```bash
 npm run preview

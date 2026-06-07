@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "wizard": "vite --host 127.0.0.1 --config wizard/vite.config.ts",
+    "wizard": "vite --host 127.0.0.1 --open --config wizard/vite.config.ts",
     "prepare:content": "node scripts/prepare-quartz-content.mjs",
     "import:jekyll": "node scripts/import-jekyll-posts.mjs",
     "quartz:install": "node scripts/install-quartz.mjs",

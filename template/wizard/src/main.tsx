@@ -162,7 +162,8 @@ function App() {
       setStatus("Saved")
       setSaveState("saved")
       setLastSavedAt(savedAt)
-      setMessage(`Saved to markdown-pages.config.json at ${savedAt}. Keep npm run preview open in another terminal to refresh the local site.`)
+      setMessage(`Saved to markdown-pages.config.json at ${savedAt}. Return to the terminal, press Ctrl+C to stop the wizard, then run npm run preview.`)
+      window.alert("Wizard saved. Return to the terminal, press Ctrl+C to stop the wizard, then run npm run preview.")
     } catch (error) {
       setStatus("Save failed")
       setSaveState("failed")
@@ -278,7 +279,7 @@ function App() {
           <div>
             <span>2</span>
             <h3>Preview locally</h3>
-            <p>Run <code>npm run preview</code> in a second terminal. Quartz serves the site locally and refreshes when content or config changes.</p>
+            <p>After saving, return to this terminal, press <code>Ctrl+C</code> to stop the wizard, then run <code>npm run preview</code>.</p>
           </div>
           <div>
             <span>3</span>
@@ -290,7 +291,7 @@ function App() {
 
       <footer>
         <span>{status}</span>
-        <span>Next: open <code>content/</code> in Obsidian, then run <code>npm run preview</code>.</span>
+        <span>Next: press <code>Ctrl+C</code> in terminal, then run <code>npm run preview</code>.</span>
       </footer>
     </main>
   )

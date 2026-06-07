@@ -14,9 +14,10 @@ function printCompletionHandoff() {
 Markdown Pages setup saved.
 
 Next steps:
-1. Open content/ in Obsidian and edit your pages, posts, and notes.
-2. In another terminal, run: npm run preview
-3. When ready, commit, push to GitHub, and enable Pages with GitHub Actions.
+1. Return to this terminal and press Ctrl+C to stop the wizard.
+2. Run: npm run preview
+3. Open content/ in Obsidian and edit your pages, posts, and notes.
+4. When ready, commit, push to GitHub, and enable Pages with GitHub Actions.
 `)
 }
 
