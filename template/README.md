@@ -39,7 +39,18 @@ Wikilinks, backlinks, graph view, tags, search, and dark/light mode are provided
 
 ## GitHub Pages
 
-The included workflow builds the site with GitHub Actions and publishes the generated `public/` folder. For project Pages, set your GitHub username and repository name in the wizard so the Quartz `baseUrl` is correct. Quartz expects this value without protocol or slashes, for example `octocat.github.io/my-site`.
+The included workflow builds the site with GitHub Actions and publishes the generated `public/` folder.
+
+Before the first deploy:
+
+1. Open this repository on GitHub.
+2. Go to `Settings -> Pages`.
+3. Under `Build and deployment`, set `Source` to `GitHub Actions`.
+4. Push to `main` or rerun the workflow.
+
+If the deploy job fails with `Failed to create deployment (status: 404)`, GitHub Pages is not enabled for the repository yet, or the Pages source is not set to GitHub Actions.
+
+For project Pages, set your GitHub username and repository name in the wizard so the Quartz `baseUrl` is correct. Quartz expects this value without protocol or slashes, for example `octocat.github.io/my-site`.
 
 Custom domains are supported by GitHub Pages, but Word Pages v1 only documents that workflow and does not automate DNS setup.
 

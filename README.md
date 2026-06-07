@@ -50,10 +50,12 @@ The generated site is built by Quartz and can be deployed by the included GitHub
 1. Create a new GitHub repository.
 2. Push the generated site folder to that repository.
 3. In GitHub, open `Settings -> Pages`.
-4. Set the source to `GitHub Actions`.
+4. Under `Build and deployment`, set `Source` to `GitHub Actions`.
 5. Push to `main`.
 
 The included workflow builds and deploys the site automatically.
+
+If the deploy job fails with `Failed to create deployment (status: 404)`, GitHub Pages has not been enabled for that repository yet, or the Pages source is not set to GitHub Actions. Open the URL shown in the workflow error, update `Settings -> Pages`, then rerun the workflow.
 
 For project pages, run the wizard and set your GitHub username and repository name so the site URL is configured correctly.
 
