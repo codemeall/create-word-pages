@@ -5,7 +5,7 @@ import path from "node:path"
 const root = process.cwd()
 const scriptsDir = path.join(root, "scripts")
 const configPath = path.join(root, "word-pages.config.json")
-const quartzConfigPath = path.join(root, "quartz.config.ts")
+const quartzConfigPath = path.join(root, "quartz.config.yaml")
 const pollMs = 1000
 
 let quartzProcess
@@ -140,7 +140,7 @@ async function handleChanges(changedFiles) {
 
   handlingChanges = true
   try {
-    const configChanged = changedFiles.includes("word-pages.config.json") || changedFiles.includes("quartz.config.ts")
+    const configChanged = changedFiles.includes("word-pages.config.json") || changedFiles.includes("quartz.config.yaml")
     const label = changedFiles.length === 1 ? changedFiles[0] : `${changedFiles.length} files`
     console.log(`\nDetected local change in ${label}. Updating preview...`)
 
@@ -199,5 +199,5 @@ await runNodeScript("install-quartz.mjs")
 lastSnapshot = await snapshotWatchedFiles()
 startQuartz()
 
-console.log("Watching content/, assets/, word-pages.config.json, and quartz.config.ts for local preview updates.")
+console.log("Watching content/, assets/, word-pages.config.json, and quartz.config.yaml for local preview updates.")
 setInterval(pollForChanges, pollMs).unref()

@@ -54,7 +54,7 @@ Important files inside `template/`:
 - `template/scripts/run-quartz.mjs`: runs Quartz from the cloned Quartz directory.
 - `template/scripts/import-jekyll-posts.mjs`: imports Jekyll `_posts` into `content/posts`.
 - `template/scripts/frontmatter.mjs`: small local frontmatter parser/stringifier used by scripts without external runtime deps.
-- `template/quartz.config.ts`: Quartz config template with placeholders for title and base URL.
+- `template/quartz.config.yaml`: Quartz config template with placeholders for title and base URL.
 - `template/.github/workflows/pages.yml`: GitHub Pages deployment workflow.
 - `template/.npmrc`: generated-site npm cache override, `cache=.word-pages/npm-cache`.
 

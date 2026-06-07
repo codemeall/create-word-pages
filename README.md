@@ -34,6 +34,7 @@ Word Pages uses `content/` as the Obsidian vault. Markdown files render only whe
 title: "My page"
 type: note
 publish: true
+graph: true
 ---
 ```
 
@@ -44,6 +45,8 @@ Supported content types:
 - `note`: knowledge-base notes under `/notes/`
 
 The generated site is built by Quartz and can be deployed by the included GitHub Actions workflow.
+
+Set `graph: false` in a Markdown file to hide the graph panel for that generated page. Omit it, or set `graph: true`, to keep the graph visible.
 
 Images can live under `content/assets/images/` or root-level `assets/images/` and be embedded from Obsidian with syntax like:
 

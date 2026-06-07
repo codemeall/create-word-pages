@@ -38,6 +38,7 @@ async function replacePlaceholders(filePath) {
     ".ts",
     ".tsx",
     ".txt",
+    ".yaml",
     ".yml"
   ])
 

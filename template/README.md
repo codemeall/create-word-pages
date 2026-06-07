@@ -23,6 +23,7 @@ Use frontmatter to classify content:
 title: "My post"
 type: post
 publish: true
+graph: true
 date: 2026-06-06
 tags:
   - writing
@@ -36,6 +37,8 @@ Supported types:
 - `note`: routed to `/notes/:slug/`.
 
 Wikilinks, backlinks, graph view, tags, search, and dark/light mode are provided by Quartz.
+
+Set `graph: false` in a Markdown file to hide the graph panel for that generated page. Omit it, or set `graph: true`, to keep the graph visible.
 
 ## Images
 

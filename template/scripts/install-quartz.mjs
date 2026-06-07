@@ -46,12 +46,12 @@ if (!await exists(path.join(quartzDir, "node_modules"))) {
 }
 
 const config = JSON.parse(await readFile(path.join(root, "word-pages.config.json"), "utf8"))
-const configTemplate = await readFile(path.join(root, "quartz.config.ts"), "utf8")
+const configTemplate = await readFile(path.join(root, "quartz.config.yaml"), "utf8")
 const renderedConfig = configTemplate
   .replaceAll("__WORD_PAGES_TITLE__", JSON.stringify(config.site.title))
   .replaceAll("__WORD_PAGES_BASE_URL__", JSON.stringify(config.site.baseUrl))
 
-await writeFile(path.join(quartzDir, "quartz.config.ts"), renderedConfig)
+await writeFile(path.join(quartzDir, "quartz.config.yaml"), renderedConfig)
 await run("npm", ["exec", "quartz", "--", "plugin", "install", "--from-config"], {
   cwd: quartzDir,
   env: {

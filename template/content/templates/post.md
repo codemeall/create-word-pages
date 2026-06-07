@@ -3,6 +3,7 @@ title: ""
 type: post
 slug: ""
 publish: false
+graph: true
 date: 2026-06-06
 tags: []
 ---

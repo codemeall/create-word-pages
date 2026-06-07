@@ -78,3 +78,31 @@ publish: true
   const stagedPost = await readFile(path.join(siteRoot, ".word-pages", "quartz-content", "posts", "hello.md"), "utf8")
   assert.match(stagedPost, /!\[Post image\]\(\.\.\/assets\/images\/post\.png\)/)
 })
+
+test("preserves graph frontmatter settings for Quartz layout conditions", async () => {
+  const siteRoot = await mkdtemp(path.join(tmpdir(), "word-pages-graph-frontmatter-"))
+  await cp(path.join(repoRoot, "template", "scripts"), path.join(siteRoot, "scripts"), { recursive: true })
+
+  await writeFile(path.join(siteRoot, "word-pages.config.json"), JSON.stringify({
+    content: {
+      source: "content",
+      staged: ".word-pages/quartz-content"
+    }
+  }))
+
+  await mkdir(path.join(siteRoot, "content", "notes"), { recursive: true })
+  await writeFile(path.join(siteRoot, "content", "notes", "private-map.md"), `---
+title: Private Map
+type: note
+publish: true
+graph: false
+---
+
+# Private Map
+`)
+
+  await execFileAsync(process.execPath, ["scripts/prepare-quartz-content.mjs"], { cwd: siteRoot })
+
+  const stagedNote = await readFile(path.join(siteRoot, ".word-pages", "quartz-content", "notes", "private-map.md"), "utf8")
+  assert.match(stagedNote, /graph: false/)
+})
