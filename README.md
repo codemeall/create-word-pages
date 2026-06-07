@@ -25,6 +25,8 @@ npm run preview
 
 The wizard opens in your default browser. After saving, return to the terminal, press `Ctrl+C` to stop the wizard, then run `npm run preview`. Open the `content/` folder in Obsidian and start editing.
 
+The wizard can also set the generated site's page theme. Choose from four starter themes: Paper, Minimal, Editorial, and Notebook. Save the selected theme, then run `npm run preview` or `npm run build` so Markdown Pages writes the matching Quartz colors.
+
 ## How Publishing Works
 
 Markdown Pages uses `content/` as the Obsidian vault. Markdown files render only when they include:
@@ -96,7 +98,7 @@ The importer copies posts into `content/posts`, adds `type: post`, adds `publish
 npm run wizard
 ```
 
-Configure site identity, GitHub Pages URL details, and visibility guidance. This opens the local wizard in your default browser.
+Configure site identity, site and page theme, GitHub Pages URL details, and visibility guidance. This opens the local wizard in your default browser.
 
 ```bash
 npm run preview

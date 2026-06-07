@@ -11,6 +11,9 @@ const validConfig = {
     repositoryName: "my-site",
     visibility: "ask",
     baseUrl: "octocat.github.io/my-site"
+  },
+  theme: {
+    preset: "clean-garden"
   }
 }
 
@@ -50,4 +53,16 @@ test("rejects invalid baseUrl values", () => {
     assert.equal(result.ok, false, baseUrl)
     assert.ok(result.fieldErrors.baseUrl, baseUrl)
   }
+})
+
+test("rejects unknown theme presets", () => {
+  const result = validateWordPagesConfig({
+    ...validConfig,
+    theme: {
+      preset: "mystery-theme"
+    }
+  })
+
+  assert.equal(result.ok, false)
+  assert.equal(result.fieldErrors.themePreset, "Choose one of the available themes")
 })

@@ -20,25 +20,25 @@ configuration:
       code: IBM Plex Mono
     colors:
       lightMode:
-        light: "#faf8f3"
-        lightgray: "#e5e0d5"
-        gray: "#8a8376"
-        darkgray: "#3e3a33"
-        dark: "#171613"
-        secondary: "#28786f"
-        tertiary: "#8d5c2c"
-        highlight: rgba(40, 120, 111, 0.14)
-        textHighlight: "#fff0a8"
+        light: __MARKDOWN_PAGES_THEME_LIGHT_MODE_LIGHT__
+        lightgray: __MARKDOWN_PAGES_THEME_LIGHT_MODE_LIGHTGRAY__
+        gray: __MARKDOWN_PAGES_THEME_LIGHT_MODE_GRAY__
+        darkgray: __MARKDOWN_PAGES_THEME_LIGHT_MODE_DARKGRAY__
+        dark: __MARKDOWN_PAGES_THEME_LIGHT_MODE_DARK__
+        secondary: __MARKDOWN_PAGES_THEME_LIGHT_MODE_SECONDARY__
+        tertiary: __MARKDOWN_PAGES_THEME_LIGHT_MODE_TERTIARY__
+        highlight: __MARKDOWN_PAGES_THEME_LIGHT_MODE_HIGHLIGHT__
+        textHighlight: __MARKDOWN_PAGES_THEME_LIGHT_MODE_TEXT_HIGHLIGHT__
       darkMode:
-        light: "#181816"
-        lightgray: "#2a2a26"
-        gray: "#aaa394"
-        darkgray: "#ddd8cb"
-        dark: "#f8f3e7"
-        secondary: "#73c6b6"
-        tertiary: "#d39b63"
-        highlight: rgba(115, 198, 182, 0.16)
-        textHighlight: "#5e4d18"
+        light: __MARKDOWN_PAGES_THEME_DARK_MODE_LIGHT__
+        lightgray: __MARKDOWN_PAGES_THEME_DARK_MODE_LIGHTGRAY__
+        gray: __MARKDOWN_PAGES_THEME_DARK_MODE_GRAY__
+        darkgray: __MARKDOWN_PAGES_THEME_DARK_MODE_DARKGRAY__
+        dark: __MARKDOWN_PAGES_THEME_DARK_MODE_DARK__
+        secondary: __MARKDOWN_PAGES_THEME_DARK_MODE_SECONDARY__
+        tertiary: __MARKDOWN_PAGES_THEME_DARK_MODE_TERTIARY__
+        highlight: __MARKDOWN_PAGES_THEME_DARK_MODE_HIGHLIGHT__
+        textHighlight: __MARKDOWN_PAGES_THEME_DARK_MODE_TEXT_HIGHLIGHT__
 plugins:
   - source: ../../markdown-pages-plugins/frontmatter
     enabled: true

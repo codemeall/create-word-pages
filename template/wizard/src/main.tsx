@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { createRoot } from "react-dom/client"
 import { validateWordPagesConfig } from "./configValidation.js"
+import { defaultThemePreset, themePresets } from "../../theme-presets.mjs"
 import "./styles.css"
 
 type SaveState = "idle" | "dirty" | "saving" | "saved" | "failed"
@@ -30,6 +31,9 @@ type WordPagesConfig = {
 }
 
 type SiteFieldErrors = Partial<Record<keyof WordPagesConfig["site"], string>>
+type ConfigFieldErrors = SiteFieldErrors & {
+  themePreset?: string
+}
 
 function deriveBaseUrl(username: string, repositoryName: string) {
   if (!username || !repositoryName) return ""
@@ -44,6 +48,9 @@ function displayPagesUrl(baseUrl: string) {
 function normalizeConfig(data: WordPagesConfig): WordPagesConfig {
   return {
     ...data,
+    theme: {
+      preset: themePresets[data.theme?.preset] ? data.theme.preset : defaultThemePreset
+    },
     branding: {
       showAttribution: data.branding?.showAttribution !== false,
       attributionText: data.branding?.attributionText ?? "Built with Markdown Pages",
@@ -82,7 +89,7 @@ function App() {
     return displayPagesUrl(deriveBaseUrl(config.site.githubUsername, config.site.repositoryName))
   }, [config])
 
-  const fieldErrors = useMemo<SiteFieldErrors>(() => {
+  const fieldErrors = useMemo<ConfigFieldErrors>(() => {
     if (!config) return {}
     return validateWordPagesConfig(config).fieldErrors
   }, [config])
@@ -125,6 +132,18 @@ function App() {
       branding: {
         ...current.branding,
         [key]: value
+      }
+    })
+    setSaveState("dirty")
+    setMessage("Unsaved changes. Click Save changes to write markdown-pages.config.json.")
+  }
+
+  function updateTheme(preset: string) {
+    setConfig((current) => current && {
+      ...current,
+      theme: {
+        ...current.theme,
+        preset
       }
     })
     setSaveState("dirty")
@@ -236,6 +255,34 @@ function App() {
         <p><strong>Rendered site:</strong> only Markdown with <code>publish: true</code> is staged for Quartz.</p>
         <p><strong>Repository source:</strong> if this repo is public, committed Markdown may be visible on GitHub even when it is not rendered.</p>
         <p><strong>Expected Pages URL:</strong> {pageUrl}</p>
+      </section>
+
+      <section className="notice theme-panel">
+        <h2>Site and page theme</h2>
+        <p className="section-note">Choose one theme for the generated Quartz site, including pages, posts, notes, links, highlights, and dark mode.</p>
+        <div className="theme-options" role="radiogroup" aria-label="Site and page theme">
+          {Object.entries(themePresets).map(([preset, theme]) => (
+            <button
+              key={preset}
+              type="button"
+              className={`theme-option ${config.theme.preset === preset ? "selected" : ""}`}
+              onClick={() => updateTheme(preset)}
+              role="radio"
+              aria-checked={config.theme.preset === preset}
+            >
+              <span className="theme-swatches" aria-hidden="true">
+                {theme.swatches.map((color) => (
+                  <span key={color} style={{ backgroundColor: color }} />
+                ))}
+              </span>
+              <span className="theme-copy">
+                <strong>{theme.name}</strong>
+                <span>{theme.description}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+        {fieldErrors.themePreset && <span className="field-error">{fieldErrors.themePreset}</span>}
       </section>
 
       <section className="notice branding-panel">

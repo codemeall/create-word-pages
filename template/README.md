@@ -12,6 +12,8 @@ npm run preview
 
 The wizard opens in your default browser. After saving, return to the terminal, press `Ctrl+C` to stop the wizard, then run `npm run preview`.
 
+The wizard also includes a site and page theme picker with four starter themes: Paper, Minimal, Editorial, and Notebook. Save the selected theme, then run `npm run preview` or `npm run build` to apply it to the Quartz site.
+
 Open `content/` as an Obsidian vault. Write pages, posts, and notes there. A Markdown file is rendered only when it has `publish: true` in frontmatter.
 
 Important: `publish: true` controls whether the generated site renders a page. It does not make committed source Markdown private. If this repository is public, committed files can be visible on GitHub even when they are not rendered.

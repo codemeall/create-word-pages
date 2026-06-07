@@ -1,3 +1,5 @@
+import { themePresetIds } from "../../theme-presets.mjs"
+
 const baseUrlPattern = /^[A-Za-z0-9.-]+(\/[A-Za-z0-9._~-]+)*$/
 
 export const requiredSiteFields = ["title", "githubUsername", "repositoryName", "baseUrl"]
@@ -5,6 +7,7 @@ export const requiredSiteFields = ["title", "githubUsername", "repositoryName", 
 export function validateWordPagesConfig(config) {
   const fieldErrors = {}
   const site = config?.site ?? {}
+  const theme = config?.theme ?? {}
 
   for (const field of requiredSiteFields) {
     if (!String(site[field] ?? "").trim()) {
@@ -23,6 +26,10 @@ export function validateWordPagesConfig(config) {
     } else if (!baseUrlPattern.test(baseUrl)) {
       fieldErrors.baseUrl = "Use a value like octocat.github.io/my-site"
     }
+  }
+
+  if (theme.preset && !themePresetIds.includes(theme.preset)) {
+    fieldErrors.themePreset = "Choose one of the available themes"
   }
 
   return {
