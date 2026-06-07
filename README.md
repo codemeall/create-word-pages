@@ -45,7 +45,7 @@ Supported content types:
 
 The generated site is built by Quartz and can be deployed by the included GitHub Actions workflow.
 
-Images can live under `content/assets/images/` and be embedded from Obsidian with syntax like:
+Images can live under `content/assets/images/` or root-level `assets/images/` and be embedded from Obsidian with syntax like:
 
 ```markdown
 ![[hero.png]]

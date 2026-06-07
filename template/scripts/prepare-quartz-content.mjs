@@ -6,6 +6,7 @@ const root = process.cwd()
 const config = JSON.parse(await readFile(path.join(root, "word-pages.config.json"), "utf8"))
 const sourceRoot = path.join(root, config.content.source)
 const stagedRoot = path.join(root, config.content.staged)
+const publicAssetsRoot = path.join(root, "assets")
 
 const allowedTypes = new Set(["page", "post", "note"])
 const imageExtensions = new Set([".avif", ".gif", ".jpeg", ".jpg", ".png", ".svg", ".webp"])
@@ -55,8 +56,7 @@ function normalizeAssetPath(value) {
 
 function buildAssetIndex(assetFiles) {
   const index = new Map()
-  for (const file of assetFiles) {
-    const relativePath = normalizeAssetPath(path.relative(sourceRoot, file))
+  for (const { file, relativePath } of assetFiles) {
     const keys = [
       relativePath,
       relativePath.toLowerCase(),
@@ -69,6 +69,25 @@ function buildAssetIndex(assetFiles) {
     }
   }
   return index
+}
+
+async function collectAvailableAssets() {
+  const contentAssets = (await collectAssets(sourceRoot)).map((file) => ({
+    file,
+    relativePath: normalizeAssetPath(path.relative(sourceRoot, file))
+  }))
+
+  let publicAssets = []
+  try {
+    publicAssets = (await collectAssets(publicAssetsRoot)).map((file) => ({
+      file,
+      relativePath: normalizeAssetPath(path.join("assets", path.relative(publicAssetsRoot, file)))
+    }))
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error
+  }
+
+  return [...contentAssets, ...publicAssets]
 }
 
 function markdownLinkPath(fromOutputPath, assetRelativePath) {
@@ -117,7 +136,7 @@ await rm(stagedRoot, { recursive: true, force: true })
 await mkdir(stagedRoot, { recursive: true })
 
 const files = await collectMarkdown(sourceRoot)
-const assetIndex = buildAssetIndex(await collectAssets(sourceRoot))
+const assetIndex = buildAssetIndex(await collectAvailableAssets())
 const referencedAssets = new Map()
 let published = 0
 

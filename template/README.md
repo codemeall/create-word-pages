@@ -39,7 +39,7 @@ Wikilinks, backlinks, graph view, tags, search, and dark/light mode are provided
 
 ## Images
 
-Store public images in `content/assets/images/` and embed them from Obsidian:
+Store public images in `content/assets/images/` or root-level `assets/images/` and embed them from Obsidian:
 
 ```markdown
 ![[hero.png]]

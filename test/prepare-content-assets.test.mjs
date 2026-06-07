@@ -62,8 +62,8 @@ test("uses route-relative paths for post image embeds", async () => {
   }))
 
   await mkdir(path.join(siteRoot, "content", "posts"), { recursive: true })
-  await mkdir(path.join(siteRoot, "content", "assets", "images"), { recursive: true })
-  await writeFile(path.join(siteRoot, "content", "assets", "images", "post.png"), "fake image")
+  await mkdir(path.join(siteRoot, "assets", "images"), { recursive: true })
+  await writeFile(path.join(siteRoot, "assets", "images", "post.png"), "fake image")
   await writeFile(path.join(siteRoot, "content", "posts", "hello.md"), `---
 title: Hello
 type: post

@@ -18,4 +18,4 @@ Word Pages stages publishable notes into Quartz routes before building the stati
 
 Only files with `publish: true` are rendered. Source privacy still depends on repository visibility.
 
-Images embedded from published Markdown with Obsidian syntax, such as `![[hero.png]]`, are copied into the generated site when they exist in the vault assets folder.
+Images embedded from published Markdown with Obsidian syntax, such as `![[hero.png]]`, are copied into the generated site when they exist in `content/assets/` or root-level `assets/`.
