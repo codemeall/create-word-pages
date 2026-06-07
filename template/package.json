@@ -9,7 +9,7 @@
     "import:jekyll": "node scripts/import-jekyll-posts.mjs",
     "quartz:install": "node scripts/install-quartz.mjs",
     "build": "npm run prepare:content && npm run quartz:install && node scripts/run-quartz.mjs build -d ../quartz-content -o public",
-    "preview": "npm run prepare:content && npm run quartz:install && node scripts/run-quartz.mjs build -d ../quartz-content --serve",
+    "preview": "node scripts/preview.mjs",
     "test": "node --test"
   },
   "dependencies": {

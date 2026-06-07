@@ -47,6 +47,8 @@ Store public images in `content/assets/images/` or root-level `assets/images/` a
 
 When you run `npm run preview` or `npm run build`, referenced images from published Markdown are copied into the Quartz build input. Draft-only images are not staged unless a published file links to them.
 
+`npm run preview` stays open and watches local content, assets, and site config. Save your Obsidian files, then use the local Quartz preview to verify changes before pushing to GitHub Pages.
+
 ## GitHub Pages
 
 The included workflow builds the site with GitHub Actions and publishes the generated `public/` folder.

@@ -53,6 +53,8 @@ Images can live under `content/assets/images/` or root-level `assets/images/` an
 
 During `npm run preview` or `npm run build`, Word Pages copies only image assets referenced by published Markdown into the Quartz build input and rewrites those embeds to public site paths.
 
+Local preview stays live while it runs. When you save published Markdown, referenced assets, or site config locally, Word Pages restages the Quartz input so you can verify the site before pushing to GitHub Pages.
+
 ## GitHub Pages Setup
 
 1. Create a new GitHub repository.
@@ -97,7 +99,7 @@ Configure site identity, GitHub Pages URL details, and visibility guidance.
 npm run preview
 ```
 
-Build and serve the site locally.
+Build, serve, and watch the site locally. Leave this command running while you edit `content/` in Obsidian.
 
 ```bash
 npm run build

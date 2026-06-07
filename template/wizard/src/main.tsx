@@ -134,7 +134,7 @@ function App() {
       setStatus("Saved")
       setSaveState("saved")
       setLastSavedAt(savedAt)
-      setMessage(`Saved to word-pages.config.json at ${savedAt}. Run npm run preview in another terminal to rebuild the site.`)
+      setMessage(`Saved to word-pages.config.json at ${savedAt}. Keep npm run preview open in another terminal to refresh the local site.`)
     } catch (error) {
       setStatus("Save failed")
       setSaveState("failed")
@@ -220,7 +220,7 @@ function App() {
           <div>
             <span>2</span>
             <h3>Preview locally</h3>
-            <p>Run <code>npm run preview</code> in a second terminal. Quartz serves the site at its local preview URL.</p>
+            <p>Run <code>npm run preview</code> in a second terminal. Quartz serves the site locally and refreshes when content or config changes.</p>
           </div>
           <div>
             <span>3</span>
