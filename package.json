@@ -1,6 +1,6 @@
 {
   "name": "@codemeall/create-markdown-pages",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Scaffold a Markdown Pages Obsidian-to-GitHub-Pages starter.",
   "type": "module",
   "bin": {
